@@ -1,0 +1,36 @@
+[gd_scene load_steps=4 format=3 uid="uid://dybel81mkluy6"]
+
+[ext_resource type="Texture2D" uid="uid://ibpi25paqmb4" path="res://assets/explosion.png" id="1_36d8p"]
+
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_5wx3b"]
+particles_animation = true
+particles_anim_h_frames = 3
+particles_anim_v_frames = 1
+particles_anim_loop = true
+
+[sub_resource type="Gradient" id="Gradient_p00jm"]
+offsets = PackedFloat32Array(0, 0.51476, 1)
+colors = PackedColorArray(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0)
+
+[node name="BulletExplosion" type="CPUParticles2D"]
+texture_filter = 1
+material = SubResource("CanvasItemMaterial_5wx3b")
+position = Vector2(-1, 242)
+rotation = -0.00369002
+scale = Vector2(2.826, 3)
+emitting = false
+amount = 1
+lifetime = 0.2
+one_shot = true
+explosiveness = 0.06
+randomness = 0.35
+fixed_fps = 60
+fract_delta = false
+texture = ExtResource("1_36d8p")
+direction = Vector2(20, 20)
+gravity = Vector2(0, 0)
+angle_min = -328.3
+angle_max = 297.7
+color_ramp = SubResource("Gradient_p00jm")
+anim_speed_min = 1.0
+anim_speed_max = 1.0

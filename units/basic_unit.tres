@@ -1,0 +1,14 @@
+[gd_resource type="Resource" script_class="UnitTemplate" load_steps=3 format=3 uid="uid://c337yfaj67jp0"]
+
+[ext_resource type="Script" path="res://scripts/UnitTemplate.gd" id="1_2pilg"]
+[ext_resource type="Texture2D" uid="uid://t6qiq2co28se" path="res://assets/kenney_sprites/Tiles/tile_0018.png" id="2_863sx"]
+
+[resource]
+script = ExtResource("1_2pilg")
+unit_type = "Basic Unit"
+max_health = 100
+power = 5
+attack_rate = 0.75
+attack_range = 200
+texture = ExtResource("2_863sx")
+bullet_name = "bullet.tscn"
