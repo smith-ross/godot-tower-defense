@@ -15,17 +15,17 @@ var path: Path2D
 func _init(_intensity: int = 5, _spawn_rate: float = 1.0):
 	intensity = _intensity
 	spawn_rate = _spawn_rate
+	enemies_remaining = intensity
 	
 func _enemy_died():	
 	enemies_remaining -= 1
-	if enemies_remaining <= 0:
+	if enemies_remaining == 0:
 		complete = true
 		Wave.new(intensity + 1, spawn_rate - .2 if spawn_rate > .4 else .2).spawn(path)
 		queue_free()
 		
 func spawn(enemy_path: Path2D):
 	path = enemy_path
-	enemies_remaining = intensity
 	for i in range(intensity):
 		var new_enemy = enemy_node.instantiate()
 		new_enemy.setup(ENEMY_LIST.pick_random())
