@@ -4,6 +4,7 @@ extends Node2D
 @export var bullet_speed: float = 500.0
 
 var bullet_owner
+var hit = false
 
 func setup(_owner: Node2D):
 	bullet_owner = _owner

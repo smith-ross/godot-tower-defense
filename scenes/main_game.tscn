@@ -135,7 +135,7 @@ sources/0 = SubResource("TileSetAtlasSource_vudfu")
 
 [sub_resource type="Curve2D" id="Curve2D_peqoh"]
 _data = {
-"points": PackedVector2Array(0, 0, 0, 0, -1, 242, 0, 0, 0, 0, 271, 238, 0, 0, 0, 0, 274, 589, 0, 0, 0, 0, 691, 596, 0, 0, 0, 0, 691, 340, 0, 0, 0, 0, 944, 337, 0, 0, 0, 0, 945, 212, 0, 0, 0, 0, 1172, 211)
+"points": PackedVector2Array(0, 0, 0, 0, -34, 240, 0, 0, 0, 0, 271, 241, 0, 0, 0, 0, 271, 596, 0, 0, 0, 0, 691, 596, 0, 0, 0, 0, 691, 340, 0, 0, 0, 0, 944, 337, 0, 0, 0, 0, 945, 212, 0, 0, 0, 0, 1172, 211)
 }
 point_count = 8
 

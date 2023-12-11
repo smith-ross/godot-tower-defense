@@ -33,7 +33,8 @@ func _on_die():
 	queue_free()
 
 func area_entered(area: Area2D):
-	if area.get_parent().is_in_group("bullet"):
+	if area.get_parent().is_in_group("bullet") and not area.get_parent().hit:
+		area.get_parent().hit = true
 		var new_explosion: CPUParticles2D = bullet_explosion.instantiate()
 		new_explosion.global_position = area.get_parent().global_position + (area.get_parent().transform.x * 25)
 		get_tree().get_root().add_child(new_explosion)
