@@ -3,7 +3,8 @@ extends Node
 
 var enemy_node = preload("res://nodes/enemy.tscn")
 const ENEMY_LIST = [
-	preload("res://enemies/airship.tres")
+	preload("res://enemies/airship.tres"),
+	preload("res://enemies/attack_plane.tres"),
 ]
 
 var intensity: int = 1

@@ -6,6 +6,7 @@
 [resource]
 script = ExtResource("1_2pilg")
 unit_type = "Basic Unit"
+cost = 0
 max_health = 100
 power = 5
 attack_rate = 0.75

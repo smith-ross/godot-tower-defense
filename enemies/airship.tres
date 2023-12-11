@@ -8,5 +8,5 @@ script = ExtResource("1_217kb")
 enemy_type = "Airship"
 health = 100
 speed = 50
-reward = 10
+reward = 100
 texture = ExtResource("2_u7tha")

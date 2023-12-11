@@ -11,7 +11,7 @@ var enemy_template: EnemyTemplate
 
 @onready var path: Path2D = get_parent()
 @export var enemy_type: String = "Airship"
-@export var speed = 50 # tie this to an EnemyTemplate Resource eventually like already doing for units
+@export var speed = 50 
 @export var money_per_kill = 5
 
 var points

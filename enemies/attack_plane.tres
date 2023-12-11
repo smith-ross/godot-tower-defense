@@ -1,0 +1,12 @@
+[gd_resource type="Resource" script_class="EnemyTemplate" load_steps=3 format=3 uid="uid://c1sjvr45y6h3n"]
+
+[ext_resource type="Script" path="res://scripts/EnemyTemplate.gd" id="1_fw5op"]
+[ext_resource type="Texture2D" uid="uid://da8bi3sgaf2k4" path="res://assets/kenney_sprites/Ships/ship_0009.png" id="2_62ryh"]
+
+[resource]
+script = ExtResource("1_fw5op")
+enemy_type = "Attack Plane"
+health = 10
+speed = 250
+reward = 2000
+texture = ExtResource("2_62ryh")
