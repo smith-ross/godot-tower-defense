@@ -11,6 +11,14 @@ signal money_changed(old_money, new_money)
 signal money_gained(money_gained)
 signal money_lost(money_lost)
 
+func format_money(money: int):
+	var rev_money = str(money)
+	var i : int = rev_money.length() - 3
+	while i > 0:
+		rev_money = rev_money.insert(i, ",")
+		i = i - 3
+	return rev_money
+
 func _init():
 	if not instance:
 		instance = self
@@ -18,7 +26,7 @@ func _init():
 		self.queue_free()
 
 func _ready():
-	money_changed.connect(func(_old_money, _new_money): money_label.text = str(gold))
+	money_changed.connect(func(_old_money, _new_money): money_label.text = format_money(gold))
 	
 static func get_instance():
 	if not instance:
