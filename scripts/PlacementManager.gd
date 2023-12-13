@@ -1,15 +1,22 @@
 extends Node2D
 
 const GRID: int = 32
+const UNITS = [
+	preload("res://units/rocket_ravager.tres"),
+	preload("res://units/single_shooter.tres")
+]
 
 var target: Unit
 var rect: Rect2
 var valid = false
 var placing = false
 
-# Called when the node enters the scene tree for the first time.
+signal unit_placed(new_unit)
+
+
 func _ready():
-	attempt_place(preload("res://units/basic_unit.tres"))
+	attempt_place(UNITS.pick_random())
+	unit_placed.connect(func(_unit): attempt_place(UNITS.pick_random()))
 
 func attempt_place(template: UnitTemplate):
 	var new_unit = preload("res://nodes/unit.tscn").instantiate()
@@ -38,6 +45,11 @@ func place():
 	new_unit.setup()
 	get_owner().add_child(new_unit)
 	clean_up(new_unit)
+	if target:
+		target.queue_free()
+		target = null
+		queue_redraw()
+	unit_placed.emit(new_unit)
 	
 func _input(event):
 	if event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_LEFT and event.pressed and valid:
@@ -63,5 +75,5 @@ func _physics_process(_delta):
 	valid = true
 
 func _draw():
-	if rect:
+	if rect and target:
 		draw_rect(rect, Color.YELLOW if valid else Color.RED)

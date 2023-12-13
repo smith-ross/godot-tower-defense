@@ -1,8 +1,9 @@
-[gd_scene load_steps=11 format=3 uid="uid://c3b3m3k1o8qyl"]
+[gd_scene load_steps=12 format=3 uid="uid://c3b3m3k1o8qyl"]
 
 [ext_resource type="Texture2D" uid="uid://bhrqudv4n7pff" path="res://assets/kenney_sprites/Tilemap/tiles_packed.png" id="1_wiwfn"]
 [ext_resource type="Script" path="res://scripts/EnemyManager.gd" id="4_jceqp"]
 [ext_resource type="Script" path="res://scripts/UnitManager.gd" id="6_ma8ee"]
+[ext_resource type="Script" path="res://scripts/PlaceableHotbar.gd" id="7_jwwtf"]
 [ext_resource type="Texture2D" uid="uid://cmiu54lsraxfe" path="res://assets/coin.png" id="7_me18n"]
 [ext_resource type="Script" path="res://scripts/GoldManager.gd" id="8_1cknv"]
 [ext_resource type="Script" path="res://scripts/PlacementManager.gd" id="8_2wd4j"]
@@ -178,21 +179,27 @@ curve = SubResource("Curve2D_peqoh")
 [node name="EnemyManager" type="Node2D" parent="."]
 script = ExtResource("4_jceqp")
 
-[node name="UI" type="Control" parent="."]
+[node name="HotbarUI" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="GoldUI" type="Control" parent="."]
 z_index = 1
 layout_mode = 3
 anchors_preset = 0
 offset_right = 1153.0
 offset_bottom = 647.0
 
-[node name="Money" type="Panel" parent="UI"]
+[node name="Money" type="Panel" parent="GoldUI"]
 layout_mode = 0
 offset_left = 18.0
 offset_top = 20.0
 offset_right = 177.0
 offset_bottom = 63.0
 
-[node name="Amount" type="Label" parent="UI/Money"]
+[node name="Amount" type="Label" parent="GoldUI/Money"]
 layout_mode = 0
 offset_left = 39.0
 offset_top = 4.0
@@ -204,7 +211,7 @@ label_settings = SubResource("LabelSettings_kk3we")
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="TextureRect" type="TextureRect" parent="UI/Money"]
+[node name="TextureRect" type="TextureRect" parent="GoldUI/Money"]
 texture_filter = 1
 layout_mode = 0
 offset_left = 8.0
@@ -215,4 +222,8 @@ texture = ExtResource("7_me18n")
 
 [node name="GoldManager" type="Node2D" parent="." node_paths=PackedStringArray("money_container")]
 script = ExtResource("8_1cknv")
-money_container = NodePath("../UI/Money")
+money_container = NodePath("../GoldUI/Money")
+
+[node name="PlaceableHotbarManager" type="Node2D" parent="." node_paths=PackedStringArray("ui")]
+script = ExtResource("7_jwwtf")
+ui = NodePath("../HotbarUI")

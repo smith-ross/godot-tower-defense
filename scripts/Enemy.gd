@@ -6,7 +6,6 @@ const MONEY = preload("res://scripts/GoldManager.gd")
 const FINAL_POS = Vector2(1139, 209)
 const MARGIN = 5
 
-var bullet_explosion = preload("res://nodes/bullet_explosion.tscn")
 var enemy_template: EnemyTemplate
 
 @onready var path: Path2D = get_parent()
@@ -34,24 +33,8 @@ func _on_die():
 
 func area_entered(area: Area2D):
 	if area.get_parent().is_in_group("bullet") and not area.get_parent().hit:
-		area.get_parent().hit = true
-		var new_explosion: CPUParticles2D = bullet_explosion.instantiate()
-		new_explosion.global_position = area.get_parent().global_position + (area.get_parent().transform.x * 25)
-		get_tree().get_root().add_child(new_explosion)
-		new_explosion.emitting = true
-		take_damage(area.get_parent().bullet_owner.power)
-		area.get_parent().queue_free()
-		
-		var t = Timer.new()
-		t.set_wait_time(new_explosion.lifetime)
-		t.set_one_shot(true)
-		get_tree().get_root().add_child(t)
-		t.start()
-		
-		await t.timeout
-		
-		t.queue_free()
-		new_explosion.queue_free()
+		area.get_parent().do_hit()
+		area.get_parent().explode(self)
 		
 
 func render():

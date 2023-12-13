@@ -1,0 +1,15 @@
+[gd_resource type="Resource" script_class="UnitTemplate" load_steps=3 format=3 uid="uid://cw3atkhcfjh20"]
+
+[ext_resource type="Script" path="res://scripts/UnitTemplate.gd" id="1_1if5v"]
+[ext_resource type="Texture2D" uid="uid://t6qiq2co28se" path="res://assets/kenney_sprites/Tiles/tile_0018.png" id="2_qtpys"]
+
+[resource]
+script = ExtResource("1_1if5v")
+unit_type = "Rocket Ravager"
+cost = 20
+max_health = 150
+power = 8
+attack_rate = 0.45
+attack_range = 200
+texture = ExtResource("2_qtpys")
+bullet_name = "rocket.tscn"

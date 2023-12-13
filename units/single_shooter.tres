@@ -1,0 +1,15 @@
+[gd_resource type="Resource" script_class="UnitTemplate" load_steps=3 format=3 uid="uid://c337yfaj67jp0"]
+
+[ext_resource type="Script" path="res://scripts/UnitTemplate.gd" id="1_wljjy"]
+[ext_resource type="Texture2D" uid="uid://b256yeiarv5i3" path="res://assets/kenney_sprites/Tiles/tile_0030.png" id="2_l1mrw"]
+
+[resource]
+script = ExtResource("1_wljjy")
+unit_type = "Single Shooter"
+cost = 5
+max_health = 100
+power = 2
+attack_rate = 0.75
+attack_range = 200
+texture = ExtResource("2_l1mrw")
+bullet_name = "bullet.tscn"
