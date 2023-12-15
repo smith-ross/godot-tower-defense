@@ -1,3 +1,4 @@
+class_name PlacementManager
 extends Node2D
 
 const GRID: int = 32
@@ -5,6 +6,7 @@ const UNITS = [
 	preload("res://units/rocket_ravager.tres"),
 	preload("res://units/single_shooter.tres")
 ]
+const Hotbar = preload("res://scripts/PlaceableHotbar.gd")
 
 var target: Unit
 var rect: Rect2
@@ -13,6 +15,18 @@ var placing = false
 
 signal unit_placed(new_unit)
 
+static var instance
+
+func _init():
+	if not instance:
+		instance = self
+	else:
+		self.queue_free()
+
+static func get_instance():
+	if not instance:
+		instance = PlacementManager.new()
+	return instance
 
 func _ready():
 	attempt_place(UNITS.pick_random())
@@ -56,16 +70,21 @@ func _input(event):
 		place()
 	
 func _process(_delta):
-	if target:
+	var hovered = Hotbar.get_instance().is_hovered()
+	if target and not hovered:
 		var text_size = target.get_node("UnitImage").texture.get_size() * target.scale
 		var mouse_x: int = int(get_viewport().get_mouse_position().x)
 		var mouse_y: int = int(get_viewport().get_mouse_position().y)
 		target.global_position = Vector2(mouse_x - (mouse_x % GRID) + (text_size.x), mouse_y - (mouse_y % GRID) + (text_size.y))
 		rect = Rect2(Vector2(mouse_x - (mouse_x % GRID), mouse_y - (mouse_y % GRID)), Vector2(GRID, GRID))
+		target.visible = true
+		queue_redraw()
+	elif hovered:
+		target.visible = false
 		queue_redraw()
 		
 func _physics_process(_delta):
-	if not target: return
+	if not target and not Hotbar.get_instance().is_hovered(): return
 	var bodies = target.get_node("Area2D").get_overlapping_areas()
 	for body in bodies:
 		body = body.get_parent()
@@ -75,5 +94,5 @@ func _physics_process(_delta):
 	valid = true
 
 func _draw():
-	if rect and target:
+	if rect and target and target.visible and not Hotbar.get_instance().is_hovered():
 		draw_rect(rect, Color.YELLOW if valid else Color.RED)

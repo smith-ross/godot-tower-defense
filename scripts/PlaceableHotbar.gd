@@ -8,29 +8,36 @@ const PLACEABLE_TEMPLATE = preload("res://nodes/buyable_unit.tscn")
 @onready var calculated_item_size = Vector2(40,40) * PLACEABLE_TEMPLATE.instantiate().get_scale()
 @export var ui: Control
 var amount_placed = 0
+var placeable_instances = []
 
-class Placeable:
-	var unit: UnitTemplate
-	
-	func _init(_unit: UnitTemplate):
-		unit = _unit
-		
-	func create():
-		var new_placeable = PLACEABLE_TEMPLATE.instantiate()
-		new_placeable.get_node("UnitImage").texture = unit.texture
-		new_placeable.get_node("CostInfo").get_node("Cost").text = str(unit.cost)
-		
-		return new_placeable
-	
+static var instance
+
+func _init():
+	if not instance:
+		instance = self
+	else:
+		self.queue_free()
+
+static func get_instance() -> PlaceableHotbar:
+	if not instance:
+		instance = PlaceableHotbar.new()
+	return instance
 
 func _ready():
 	add_placeable_unit(load("res://units/single_shooter.tres"))
 	add_placeable_unit(load("res://units/rocket_ravager.tres"))
 
+func is_hovered():
+	for button in placeable_instances:
+		if button.is_hovered():
+			return true
+	return false
+
 func add_placeable_unit(unit: UnitTemplate):
-	var unit_placeable = Placeable.new(unit)
-	var instance = unit_placeable.create()
+	var new_instance = PLACEABLE_TEMPLATE.instantiate()
+	new_instance.setup(unit, self)
 	var previous_position = START_POINT + (Vector2(MARGIN + calculated_item_size.x, 0)) * amount_placed
 	amount_placed += 1
-	instance.global_position = previous_position + Vector2(MARGIN, 0)
-	ui.add_child(instance)
+	new_instance.global_position = previous_position + Vector2(MARGIN, 0)
+	ui.add_child(new_instance)
+	placeable_instances.append(new_instance)
