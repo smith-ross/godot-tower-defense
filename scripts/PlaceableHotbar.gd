@@ -4,6 +4,10 @@ extends Node
 const START_POINT = Vector2(760, 507)
 const MARGIN = 10
 const PLACEABLE_TEMPLATE = preload("res://nodes/buyable_unit.tscn")	
+const UNITS: Array[UnitTemplate] = [
+	preload("res://units/single_shooter.tres"),
+	preload("res://units/rocket_ravager.tres")
+]
 
 @onready var calculated_item_size = Vector2(40,40) * PLACEABLE_TEMPLATE.instantiate().get_scale()
 @export var ui: Control
@@ -23,10 +27,13 @@ static func get_instance() -> PlaceableHotbar:
 		instance = PlaceableHotbar.new()
 	return instance
 
-func _ready():
-	add_placeable_unit(load("res://units/single_shooter.tres"))
-	add_placeable_unit(load("res://units/rocket_ravager.tres"))
+func setup():
+	for unit: UnitTemplate in UNITS:
+		add_placeable_unit(unit)
 
+func _ready():
+	setup.call_deferred()
+	
 func is_hovered():
 	for button in placeable_instances:
 		if button.is_hovered():
