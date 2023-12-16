@@ -13,6 +13,7 @@ var target_template: UnitTemplate
 var rect: Rect2
 var valid = false
 var placing = false
+var held = false
 
 signal unit_placed(unit)
 
@@ -52,7 +53,7 @@ func attempt_place(template: UnitTemplate):
 	
 	
 func clean_up(new_unit: Unit):
-	await get_tree().create_timer(.1).timeout
+	await get_tree().create_timer(.05).timeout
 	var bodies = new_unit.get_node("Area2D").get_overlapping_areas()
 	for body in bodies:
 		body = body.get_parent()
@@ -75,7 +76,9 @@ func place():
 	
 func _input(event):
 	if event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_LEFT and event.pressed and valid:
-		place()
+		held = true
+	elif event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_LEFT and event.is_released():
+		held = false
 	
 func _process(_delta):
 	var hovered = Hotbar.get_instance().is_hovered()
@@ -86,12 +89,12 @@ func _process(_delta):
 		target.global_position = Vector2(mouse_x - (mouse_x % GRID) + (text_size.x), mouse_y - (mouse_y % GRID) + (text_size.y))
 		rect = Rect2(Vector2(mouse_x - (mouse_x % GRID), mouse_y - (mouse_y % GRID)), Vector2(GRID, GRID))
 		target.visible = true
-		queue_redraw()
 	elif target and hovered:
 		target.visible = false
 		queue_redraw()
 		
-func _physics_process(_delta):
+func valid_check():
+	valid = false
 	if not target or not target.visible: 
 		valid = false
 		return
@@ -102,6 +105,13 @@ func _physics_process(_delta):
 			valid = false
 			return
 	valid = true
+	
+func _physics_process(_delta):
+	valid_check()
+	if held and valid:
+		place()
+		valid = false
+	queue_redraw()
 
 func _draw():
 	if rect and target and target.visible:

@@ -1,10 +1,11 @@
-[gd_scene load_steps=12 format=3 uid="uid://c3b3m3k1o8qyl"]
+[gd_scene load_steps=13 format=3 uid="uid://c3b3m3k1o8qyl"]
 
 [ext_resource type="Texture2D" uid="uid://bhrqudv4n7pff" path="res://assets/kenney_sprites/Tilemap/tiles_packed.png" id="1_wiwfn"]
 [ext_resource type="Script" path="res://scripts/EnemyManager.gd" id="4_jceqp"]
 [ext_resource type="Script" path="res://scripts/UnitManager.gd" id="6_ma8ee"]
 [ext_resource type="Script" path="res://scripts/PlaceableHotbar.gd" id="7_jwwtf"]
 [ext_resource type="Texture2D" uid="uid://cmiu54lsraxfe" path="res://assets/coin.png" id="7_me18n"]
+[ext_resource type="Script" path="res://scripts/RoundManager.gd" id="8_0m3w6"]
 [ext_resource type="Script" path="res://scripts/GoldManager.gd" id="8_1cknv"]
 [ext_resource type="Script" path="res://scripts/PlacementManager.gd" id="8_2wd4j"]
 
@@ -167,25 +168,8 @@ position = Vector2(64, 120)
 scale = Vector2(9.6, 2.4)
 polygon = PackedVector2Array(4.94792, 10, 5, 83.3333, 31.6667, 83.3333, 31.6667, 30, 45, 29.7917, 45, 3.125, 54.4271, 3.125, 54.4271, -16.6667, 39.9479, -16.6667, 40, 10.2083, 26.6667, 10, 26.6667, 63.3333, 10, 63.3333, 10, 9.79166, 10, -10, -10.0521, -10, -10.0521, 10)
 
-[node name="UnitManager" type="Node2D" parent="."]
-script = ExtResource("6_ma8ee")
-
-[node name="PlacementManager" type="Node2D" parent="."]
-script = ExtResource("8_2wd4j")
-
 [node name="EnemyPath" type="Path2D" parent="."]
 curve = SubResource("Curve2D_peqoh")
-
-[node name="EnemyManager" type="Node2D" parent="."]
-script = ExtResource("4_jceqp")
-
-[node name="GoldManager" type="Node2D" parent="." node_paths=PackedStringArray("money_container")]
-script = ExtResource("8_1cknv")
-money_container = NodePath("../UI/GoldUI/Money")
-
-[node name="PlaceableHotbarManager" type="Node2D" parent="." node_paths=PackedStringArray("ui")]
-script = ExtResource("7_jwwtf")
-ui = NodePath("../UI/HotbarUI")
 
 [node name="UI" type="CanvasLayer" parent="."]
 layer = 2
@@ -233,3 +217,25 @@ offset_top = 1.0
 offset_right = 49.0
 offset_bottom = 42.0
 texture = ExtResource("7_me18n")
+
+[node name="GameLogicManagers" type="Node2D" parent="."]
+
+[node name="UnitManager" type="Node2D" parent="GameLogicManagers"]
+script = ExtResource("6_ma8ee")
+
+[node name="PlacementManager" type="Node2D" parent="GameLogicManagers"]
+script = ExtResource("8_2wd4j")
+
+[node name="EnemyManager" type="Node2D" parent="GameLogicManagers"]
+script = ExtResource("4_jceqp")
+
+[node name="GoldManager" type="Node2D" parent="GameLogicManagers" node_paths=PackedStringArray("money_container")]
+script = ExtResource("8_1cknv")
+money_container = NodePath("../../UI/GoldUI/Money")
+
+[node name="PlaceableHotbarManager" type="Node2D" parent="GameLogicManagers" node_paths=PackedStringArray("ui")]
+script = ExtResource("7_jwwtf")
+ui = NodePath("../../UI/HotbarUI")
+
+[node name="RoundManager" type="Node2D" parent="GameLogicManagers"]
+script = ExtResource("8_0m3w6")
