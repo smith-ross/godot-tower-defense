@@ -53,17 +53,19 @@ func attempt_place(template: UnitTemplate):
 	
 	
 func clean_up(new_unit: Unit):
+	var cost = target_template.cost
 	await get_tree().create_timer(.05).timeout
 	var bodies = new_unit.get_node("Area2D").get_overlapping_areas()
 	for body in bodies:
 		body = body.get_parent()
 		if body.is_in_group("path") or body.is_in_group("units"):
 			new_unit.queue_free()
-			# refund()
+			GoldManager.get_instance().add_money(cost)
 			return
 	
 func place():
-	if not valid: return
+	if not valid or (GoldManager.get_instance().gold - target_template.cost < 0): return
+	GoldManager.get_instance().lose_money(target_template.cost)
 	var new_unit = preload("res://nodes/unit.tscn").instantiate()
 	new_unit.unit_template = target.unit_template
 	new_unit.name = "Unit"
@@ -95,7 +97,7 @@ func _process(_delta):
 		
 func valid_check():
 	valid = false
-	if not target or not target.visible: 
+	if not target or not target.visible or (GoldManager.get_instance().gold - target_template.cost < 0): 
 		valid = false
 		return
 	var bodies = target.get_node("Area2D").get_overlapping_areas()

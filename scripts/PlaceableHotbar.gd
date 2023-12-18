@@ -6,7 +6,7 @@ const MARGIN = 10
 const PLACEABLE_TEMPLATE = preload("res://nodes/buyable_unit.tscn")	
 const UNITS: Array[UnitTemplate] = [
 	preload("res://units/single_shooter.tres"),
-	preload("res://units/rocket_ravager.tres")
+	preload("res://units/rocket_ravager.tres"),
 ]
 
 @onready var calculated_item_size = Vector2(40,40) * PLACEABLE_TEMPLATE.instantiate().get_scale()

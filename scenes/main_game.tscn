@@ -232,6 +232,7 @@ script = ExtResource("4_jceqp")
 [node name="GoldManager" type="Node2D" parent="GameLogicManagers" node_paths=PackedStringArray("money_container")]
 script = ExtResource("8_1cknv")
 money_container = NodePath("../../UI/GoldUI/Money")
+gold = 20
 
 [node name="PlaceableHotbarManager" type="Node2D" parent="GameLogicManagers" node_paths=PackedStringArray("ui")]
 script = ExtResource("7_jwwtf")

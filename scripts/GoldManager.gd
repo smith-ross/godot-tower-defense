@@ -5,7 +5,7 @@ static var instance: GoldManager
 
 @export var money_container: Panel
 @onready var money_label: Label = money_container.get_node("Amount")
-var gold: int = 0
+@export var gold: int = 0
 
 signal money_changed(old_money, new_money)
 signal money_gained(money_gained)
@@ -26,6 +26,7 @@ func _init():
 		self.queue_free()
 
 func _ready():
+	money_label.text = format_money(gold)
 	money_changed.connect(func(_old_money, _new_money): money_label.text = format_money(gold))
 	
 static func get_instance():
